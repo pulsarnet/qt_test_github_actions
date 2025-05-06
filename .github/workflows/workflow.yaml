@@ -33,7 +33,7 @@ jobs:
 
       - name: Check Requirements
         run: |
-          tree -d /opt/
+          ldconfig -p | grep libqxcb
 
       - name: Download libxcb-cursor0
         if: runner.os == 'Linux'
