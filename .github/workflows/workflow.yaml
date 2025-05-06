@@ -14,9 +14,11 @@ jobs:
           include:
             - os: ubuntu-latest
               preset: dev
+              qt_host: linux
               qt_arch: linux_gcc_64
             - os: ubuntu-24.04-arm
               preset: dev
+              qt_host: linux_arm64
               qt_arch: linux_gcc_arm64
 
     runs-on: ${{ matrix.os }}
@@ -32,6 +34,7 @@ jobs:
         with:
           cache: 'true'
           version: '6.9.0'
+          host: ${{ matrix.qt_host }}
           arch: ${{ matrix.qt_arch }}
 
       - name: Prepare linux build env
