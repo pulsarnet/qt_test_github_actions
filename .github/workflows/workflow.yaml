@@ -26,8 +26,14 @@ jobs:
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v4.2.1
+        cache: true
+        cache-key-prefix: install-qt-action-${{ runner.os }}
         with:
           version: '6.8.3'
+
+      - name: Check Requirements
+        run: |
+          ldd /opt/XnView/lib/platforms/libqxcb.so  | grep "not found"
 
       - name: Download libxcb-cursor0
         if: runner.os == 'Linux'
