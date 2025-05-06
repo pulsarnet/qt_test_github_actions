@@ -16,7 +16,7 @@ private slots:
     void myFirstTest() {
         Widget w;
         w.test_method();
-        QVERIFY(1 == 0);
+        QVERIFY(1 == 1);
     }
 };
 

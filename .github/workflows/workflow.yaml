@@ -13,7 +13,8 @@ jobs:
       matrix:
           include:
             - os: ubuntu-latest
-              triplet: x64-linux
+              preset: dev
+            - os: ubuntu-24.04-arm
               preset: dev
 
     runs-on: ${{ matrix.os }}
@@ -29,9 +30,14 @@ jobs:
         with:
           cache: 'true'
           version: '6.9.0'
+
+      - name: Prepare linux build env
+        if: runner.os == 'Linux'
+        run: |
+          echo "QT_QPA_PLATFORM=offscreen" >> $GITHUB_ENV    
+
       - name: Run Cmake
         env:
           QT_DEBUG_PLUGINS: 1
-          QT_QPA_PLATFORM: "offscreen"
         run:
           cmake --workflow --preset ${{ matrix.preset }}
