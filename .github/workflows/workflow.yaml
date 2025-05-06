@@ -33,7 +33,7 @@ jobs:
 
       - name: Check Requirements
         run: |
-          ldd /opt/XnView/lib/platforms/libqxcb.so  | grep "not found"
+          tree -d /opt/
 
       - name: Download libxcb-cursor0
         if: runner.os == 'Linux'
