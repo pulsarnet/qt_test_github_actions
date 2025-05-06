@@ -14,12 +14,16 @@ jobs:
           include:
             - os: ubuntu-latest
               preset: dev
-              qt_host: linux
-              qt_arch: linux_gcc_64
             - os: ubuntu-24.04-arm
               preset: dev
-              qt_host: linux_arm64
-              qt_arch: linux_gcc_arm64
+            - os: windows-2022
+              preset: dev
+            - os: windows-11-arm
+              preset: dev
+            - os: macos-15
+              preset: dev
+            - os: macos-13
+              preset: dev
 
     runs-on: ${{ matrix.os }}
 
@@ -32,9 +36,12 @@ jobs:
       - name: Install Qt
         uses: jdpurcell/install-qt-action@v5
         with:
-          aqtversion: '==3.2.*'
           cache: 'true'
           version: '6.9.0'
+
+      - name: Init MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
 
       - name: Prepare linux build env
         if: runner.os == 'Linux'
@@ -42,7 +49,5 @@ jobs:
           echo "QT_QPA_PLATFORM=offscreen" >> $GITHUB_ENV    
 
       - name: Run Cmake
-        env:
-          QT_DEBUG_PLUGINS: 1
         run:
           cmake --workflow --preset ${{ matrix.preset }}
