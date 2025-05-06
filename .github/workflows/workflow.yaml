@@ -1,0 +1,52 @@
+name: CMake on a specific platform
+
+on:
+  push:
+    branches: [ "develop", "master"]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+          include:
+            - os: ubuntu-latest
+              triplet: x64-linux
+              preset: dev
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4.2.1
+        with:
+          version: '6.8.3'
+
+      - name: Download libxcb-cursor0
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update --fix-missing
+          sudo apt-get install -y \
+            libfontconfig1 \
+            libxcb1 \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libx11-dev \
+            libxcursor-dev \
+            libxext-dev \
+            libxfixes-dev \
+            libxft-dev \
+            libxi-dev \
+            libxrandr-dev \
+            libxrender-dev
+
+      - name: Run Cmake
+        run:
+          cmake --workflow --preset ${{ matrix.preset }}
