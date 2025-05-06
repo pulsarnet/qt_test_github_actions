@@ -5,12 +5,12 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets Test)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Test DataVisualization Core5Compat)
 
 add_library(qt_test_actions_ubuntu lib.cpp
         Widget.cpp
         Widget.h)
-target_link_libraries(qt_test_actions_ubuntu PUBLIC Qt::Core Qt::Widgets)
+target_link_libraries(qt_test_actions_ubuntu PUBLIC Qt::Core Qt::Widgets Qt::DataVisualization Qt::Core5Compat)
 target_include_directories(qt_test_actions_ubuntu PUBLIC
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/..>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
