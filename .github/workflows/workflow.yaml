@@ -35,8 +35,6 @@ jobs:
           aqtversion: '==3.2.*'
           cache: 'true'
           version: '6.9.0'
-          host: ${{ matrix.qt_host }}
-          arch: ${{ matrix.qt_arch }}
 
       - name: Prepare linux build env
         if: runner.os == 'Linux'
