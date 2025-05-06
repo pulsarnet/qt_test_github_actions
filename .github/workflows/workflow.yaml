@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@8377c563085d13f9b55d791fa1a3de20dc1f7ab7
+        uses: jdpurcell/install-qt-action@v5
         with:
           aqtversion: '==3.2.*'
           cache: 'true'
